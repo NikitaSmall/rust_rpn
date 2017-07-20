@@ -1,0 +1,6 @@
+[package]
+name = "rpn"
+version = "0.1.0"
+authors = ["NikitaSmall <nikitasosnov@yahoo.com>"]
+
+[dependencies]
