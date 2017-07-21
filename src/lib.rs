@@ -1,8 +1,7 @@
-#[derive(Debug)]
-enum Stackable {
-    Operation(char),
-    Value(i32),
-}
+mod converter;
+
+use converter::Stackable;
+use converter::Converter;
 
 #[derive(Debug)]
 pub struct Processor {
@@ -14,7 +13,7 @@ impl Processor {
     pub fn new(raw_value: String) -> Processor {
         Processor {
             stack: Vec::new(),
-            values: Processor::parse(raw_value),
+            values: Converter::parse(&raw_value),
         }
     }
 
@@ -38,25 +37,6 @@ impl Processor {
 
         }
         self.stack.pop().unwrap()
-    }
-
-    fn parse(raw_value: String) -> Vec<Stackable> {
-        let values: Vec<&str> = raw_value.split_whitespace().collect();
-
-        values
-            .into_iter()
-            .map(|value| match value {
-                "+" => Stackable::Operation('+'),
-                "-" => Stackable::Operation('-'),
-                "/" => Stackable::Operation('/'),
-                "*" => Stackable::Operation('*'),
-                _ => Stackable::Value(Processor::parse_value(value)),
-            })
-            .collect()
-    }
-
-    fn parse_value(number: &str) -> i32 {
-        number.trim().parse().expect("Please type a number!")
     }
 }
 
